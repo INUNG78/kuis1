@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Pengetahuan Umum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+            text-align: left;
+            display: none;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option {
+            margin: 5px 0;
+            padding: 8px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .option:hover {
+            background-color: #bdc3c7;
+        }
+        .selected {
+            background-color: #3498db;
+            color: white;
+        }
+        .correct {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .incorrect {
+            background-color: #e74c3c;
+            color: white;
+        }
+        #start-screen, #quiz-screen, #result-screen {
+            transition: opacity 0.5s;
+        }
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+        .visible {
+            display: block;
+            opacity: 1;
+        }
+        #progress {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        #name-input {
+            padding: 8px;
+            width: 80%;
+            max-width: 300px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .score-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .score-percentage {
+            font-size: 36px;
+            font-weight: bold;
+            color: #3498db;
+            margin: 10px 0;
+        }
+        .score-text {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .user-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Halaman Awal -->
+        <div id="start-screen" class="visible">
+            <h1>Kuis Pengetahuan Umum</h1>
+            <p>Selamat datang di kuis pengetahuan umum! Kuis ini terdiri dari 5 pertanyaan pilihan ganda.</p>
+            <p>Pilih jawaban yang menurut Anda benar dan lihat skor Anda di akhir kuis.</p>
+            
+            <div>
+                <label for="name-input">Masukkan Nama Anda:</label><br>
+                <input type="text" id="name-input" placeholder="Nama Anda">
+            </div>
+            
+            <button id="start-btn">Mulai Kuis</button>
+        </div>
+
+        <!-- Halaman Kuis -->
+        <div id="quiz-screen" class="hidden">
+            <div id="progress">Pertanyaan 1 dari 5</div>
+            
+            <div id="question1" class="question">
+                <h3>1. Apa ibukota Indonesia?</h3>
+                <div class="options">
+                    <div class="option" data-correct="false">A. Bandung</div>
+                    <div class="option" data-correct="false">B. Surabaya</div>
+                    <div class="option" data-correct="true">C. Jakarta</div>
+                    <div class="option" data-correct="false">D. Medan</div>
+                    <div class="option" data-correct="false">E. Yogyakarta</div>
+                </div>
+            </div>
+
+            <div id="question2" class="question">
+                <h3>2. Planet terdekat dengan matahari adalah?</h3>
+                <div class="options">
+                    <div class="option" data-correct="true">A. Merkurius</div>
+                    <div class="option" data-correct="false">B. Venus</div>
+                    <div class="option" data-correct="false">C. Bumi</div>
+                    <div class="option" data-correct="false">D. Mars</div>
+                    <div class="option" data-correct="false">E. Jupiter</div>
+                </div>
+            </div>
+
+            <div id="question3" class="question">
+                <h3>3. Siapakah penemu teori relativitas?</h3>
+                <div class="options">
+                    <div class="option" data-correct="false">A. Isaac Newton</div>
+                    <div class="option" data-correct="false">B. Thomas Edison</div>
+                    <div class="option" data-correct="false">C. Nikola Tesla</div>
+                    <div class="option" data-correct="true">D. Albert Einstein</div>
+                    <div class="option" data-correct="false">E. Galileo Galilei</div>
+                </div>
+            </div>
+
+            <div id="question4" class="question">
+                <h3>4. Berapakah hasil dari 7 × 8?</h3>
+                <div class="options">
+                    <div class="option" data-correct="false">A. 48</div>
+                    <div class="option" data-correct="false">B. 54</div>
+                    <div class="option" data-correct="false">C. 56</div>
+                    <div class="option" data-correct="true">D. 56</div>
+                    <div class="option" data-correct="false">E. 64</div>
+                </div>
+            </div>
+
+            <div id="question5" class="question">
+                <h3>5. Bahasa pemrograman yang digunakan untuk membuat halaman web interaktif adalah?</h3>
+                <div class="options">
+                    <div class="option" data-correct="false">A. Python</div>
+                    <div class="option" data-correct="false">B. Java</div>
+                    <div class="option" data-correct="false">C. C++</div>
+                    <div class="option" data-correct="false">D. PHP</div>
+                    <div class="option" data-correct="true">E. JavaScript</div>
+                </div>
+            </div>
+
+            <button id="next-btn" disabled>Lanjut</button>
+        </div>
+
+        <!-- Halaman Hasil -->
+        <div id="result-screen" class="hidden">
+            <h1>Hasil Kuis</h1>
+            
+            <div class="score-container">
+                <div class="score-text">Selamat <span class="user-name" id="display-name"></span>!</div>
+                <div class="score-percentage" id="score-percentage">0%</div>
+                <div class="score-text">Anda menjawab <span id="score-correct">0</span> dari <span id="score-total">5</span> pertanyaan dengan benar</div>
+            </div>
+            
+            <p>Terima kasih telah mengerjakan kuis ini!</p>
+            <button id="restart-btn">Kembali ke Awal</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elemen-elemen penting
+            const startScreen = document.getElementById('start-screen');
+            const quizScreen = document.getElementById('quiz-screen');
+            const resultScreen = document.getElementById('result-screen');
+            const startBtn = document.getElementById('start-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const progress = document.getElementById('progress');
+            const nameInput = document.getElementById('name-input');
+            const displayName = document.getElementById('display-name');
+            const scorePercentage = document.getElementById('score-percentage');
+            const scoreCorrect = document.getElementById('score-correct');
+            const scoreTotal = document.getElementById('score-total');
+            
+            // Variabel kuis
+            let currentQuestion = 1;
+            let score = 0;
+            let userAnswers = [];
+            let userName = '';
+            
+            // Pertanyaan
+            const questions = document.querySelectorAll('.question');
+            const totalQuestions = questions.length;
+            
+            // Mulai kuis
+            startBtn.addEventListener('click', function() {
+                userName = nameInput.value.trim();
+                
+                if (userName === '') {
+                    alert('Silakan masukkan nama Anda terlebih dahulu!');
+                    return;
+                }
+                
+                startScreen.classList.remove('visible');
+                startScreen.classList.add('hidden');
+                
+                quizScreen.classList.remove('hidden');
+                quizScreen.classList.add('visible');
+                
+                showQuestion(currentQuestion);
+            });
+            
+            // Tampilkan pertanyaan
+            function showQuestion(questionNumber) {
+                questions.forEach(question => {
+                    question.style.display = 'none';
+                });
+                
+                document.getElementById(`question${questionNumber}`).style.display = 'block';
+                progress.textContent = `Pertanyaan ${questionNumber} dari ${totalQuestions}`;
+                
+                // Reset tombol next
+                nextBtn.disabled = true;
+                
+                // Tambahkan event listener untuk opsi jawaban
+                const options = document.querySelectorAll(`#question${questionNumber} .option`);
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                    
+                    option.addEventListener('click', function() {
+                        // Hapus seleksi dari opsi lain
+                        options.forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Tandai opsi yang dipilih
+                        this.classList.add('selected');
+                        nextBtn.disabled = false;
+                        
+                        // Simpan jawaban user
+                        userAnswers[questionNumber - 1] = this.textContent.trim();
+                    });
+                });
+            }
+            
+            // Tombol next
+            nextBtn.addEventListener('click', function() {
+                // Periksa jawaban
+                const selectedOption = document.querySelector(`#question${currentQuestion} .option.selected`);
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        selectedOption.classList.add('correct');
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        // Tandai jawaban yang benar
+                        const correctOption = document.querySelector(`#question${currentQuestion} .option[data-correct="true"]`);
+                        correctOption.classList.add('correct');
+                    }
+                    
+                    // Nonaktifkan semua opsi
+                    const options = document.querySelectorAll(`#question${currentQuestion} .option`);
+                    options.forEach(option => {
+                        option.style.pointerEvents = 'none';
+                    });
+                    
+                    // Tunggu sebentar sebelum lanjut
+                    setTimeout(() => {
+                        if (currentQuestion < totalQuestions) {
+                            currentQuestion++;
+                            showQuestion(currentQuestion);
+                        } else {
+                            // Tampilkan hasil
+                            showResult();
+                        }
+                    }, 1000);
+                }
+            });
+            
+            // Tampilkan hasil
+            function showResult() {
+                quizScreen.classList.remove('visible');
+                quizScreen.classList.add('hidden');
+                
+                resultScreen.classList.remove('hidden');
+                resultScreen.classList.add('visible');
+                
+                // Tampilkan nama pengguna
+                displayName.textContent = userName;
+                
+                // Hitung persentase
+                const percentage = Math.round((score / totalQuestions) * 100);
+                
+                // Tampilkan skor
+                scoreCorrect.textContent = score;
+                scoreTotal.textContent = totalQuestions;
+                scorePercentage.textContent = `${percentage}%`;
+                
+                // Ubah warna berdasarkan persentase
+                if (percentage >= 80) {
+                    scorePercentage.style.color = '#2ecc71'; // Hijau untuk skor tinggi
+                } else if (percentage >= 50) {
+                    scorePercentage.style.color = '#f39c12'; // Kuning untuk skor sedang
+                } else {
+                    scorePercentage.style.color = '#e74c3c'; // Merah untuk skor rendah
+                }
+            }
+            
+            // Mulai ulang kuis
+            restartBtn.addEventListener('click', function() {
+                currentQuestion = 1;
+                score = 0;
+                userAnswers = [];
+                
+                resultScreen.classList.remove('visible');
+                resultScreen.classList.add('hidden');
+                
+                startScreen.classList.remove('hidden');
+                startScreen.classList.add('visible');
+                
+                // Reset input nama
+                nameInput.value = '';
+                
+                // Reset semua pertanyaan
+                questions.forEach(question => {
+                    const options = question.querySelectorAll('.option');
+                    options.forEach(option => {
+                        option.classList.remove('selected', 'correct', 'incorrect');
+                        option.style.pointerEvents = 'auto';
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
